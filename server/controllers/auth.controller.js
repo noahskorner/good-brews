@@ -106,14 +106,14 @@ const generateRefreshToken = async (user) => {
 
   // delete the old refresh tokens
   await RefreshTokens.destroy({
-    where: { userId: user.id },
+    where: { user_id: user.id },
   }).catch((error) => {
     console.log(error);
     return;
   });
 
   // create a new one
-  await RefreshTokens.create({ token, userId: user.id }).catch((error) => {
+  await RefreshTokens.create({ token, user_id: user.id }).catch((error) => {
     console.log(error);
     return;
   });
@@ -227,7 +227,7 @@ const refreshUserToken = async (req, res) => {
 const logoutUser = async (req, res) => {
   try {
     await RefreshTokens.destroy({
-      where: { userId: req.user.id },
+      where: { user_id: req.user.id },
     });
     return res.sendStatus(200);
   } catch (error) {
