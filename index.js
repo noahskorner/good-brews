@@ -1,24 +1,23 @@
 const cors = require("cors");
 const express = require("express");
-const { createResponse } = require("./common/functions.js");
 const { authenticate, authorize } = require("./middleware/auth.js");
-const { seed } = require("./utils/seed.js");
 const app = express();
 
 // APP SETTINGS
 app.use(
   cors({
-    origin: ["http://localhost:8080"],
+    origin: ["http://localhost:3000"],
   })
 );
 app.use(express.json());
 
 // ROUTES
-app.get("/", authenticate, authorize(["SUPERADMIN"]), async (req, res) => {
-  const response = createResponse(true, "Health check passed.", [], {});
-  return res.status(200).json(response);
+app.get("/", authenticate, async (req, res) => {
+  return res.sendStatus(200);
 });
-app.use("/auth", require("./routes/auth.route.js"));
+app.use("/api/auth", require("./routes/auth.route.js"));
+app.use("/api/user", require("./routes/user.route.js"));
+app.use("/api/breweries", require("./routes/breweries.routes"));
 
 // SETUP DB
 const db = require("./models/index.js");
