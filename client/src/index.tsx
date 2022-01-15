@@ -3,11 +3,21 @@ import ReactDOM from "react-dom";
 import "./assets/styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import About from "./pages/About";
+import Breweries from "./pages/Breweries";
+import Login from "./pages/Login";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <App>
+      <Routes>
+        <Route path="/" element={<Breweries />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </App>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
