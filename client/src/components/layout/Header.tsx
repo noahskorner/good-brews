@@ -8,7 +8,7 @@ interface HeaderProps {
 const Header = (props: HeaderProps) => {
   return (
     <div className="w-full h-20 flex justify-center items-center px-2 bg-white border-b">
-      <div className="w-full max-w-7xl flex justify-between items-center ">
+      <div className="w-full flex justify-between items-center ">
         <div className="w-1/3 md:hidden">
           <button
             className="w-8 h-8 hover:bg-gray-100 rounded flex justify-center items-center"
