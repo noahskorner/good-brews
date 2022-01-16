@@ -1,7 +1,7 @@
 const cors = require("cors");
 const express = require("express");
 const dbConfig = require("./config/db.config.js");
-const { authenticate, authorize } = require("./middleware/auth.js");
+const { authenticate } = require("./middleware/auth.js");
 const app = express();
 
 // APP SETTINGS
