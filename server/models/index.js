@@ -25,10 +25,10 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-const { breweries, refreshTokens, users } = initModels(sequelize);
+const { breweries, refresh_tokens, users } = initModels(sequelize);
 
 db.Breweries = breweries;
-db.RefreshTokens = refreshTokens;
+db.RefreshTokens = refresh_tokens;
 db.Users = users;
 
 module.exports = db;
