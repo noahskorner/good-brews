@@ -1,5 +1,5 @@
-import useSidebar from "./composables/useSidebar";
-import useWindowSize from "./composables/useWindowSize";
+import useSidebar from "./hooks/useSidebar";
+import useWindowSize from "./hooks/useWindowSize";
 import Header from "./components/layout/Header";
 import Sidebar from "./components/layout/Sidebar";
 

@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Breweries from "./pages/Breweries";
 import Login from "./pages/Login";
+import News from "./pages/News";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -15,6 +16,7 @@ ReactDOM.render(
         <Route path="/" element={<Breweries />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/news" element={<News />} />
       </Routes>
     </App>
   </BrowserRouter>,
