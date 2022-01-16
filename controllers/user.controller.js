@@ -11,7 +11,12 @@ const getUser = async (req, res) => {
       return res.sendStatus(403);
     });
 
-  return res.status(200).json(user);
+  if (!user) return res.sendStatus(401);
+
+  const response = user.toJSON();
+  delete response.password; //remove password before sending back
+
+  return res.status(200).json(response);
 };
 
 module.exports = {
