@@ -1,35 +1,54 @@
-import React, { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import GoogleMapReact, { fitBounds } from "google-map-react";
-import useWindowSize from "../../hooks/useWindowSize";
-import { convertRemToPixels } from "../../utils/index";
-import { Brewery } from "../../interfaces/global";
+import { BreweryType } from "../../interfaces/global";
 import Marker from "./Marker";
 
 interface MapProps {
-  breweries: Brewery[];
+  breweries: BreweryType[];
 }
 const Map = ({ breweries }: MapProps) => {
-  const { width, height } = useWindowSize();
-  const [mapRef, setMapRef] = useState<any>(null);
+  const defaultCenter = { lat: 35, lng: -100 };
   const [maps, setMaps] = useState<any>(null);
-  const [center, setCenter] = useState({ lat: 35, lng: -100 });
+  const [center, setCenter] = useState(defaultCenter);
   const [zoom, setZoom] = useState(1);
+  const [mapHeight, setMapHeight] = useState();
+  const [mapWidth, setMapWidth] = useState();
+  const mapRef = useRef<any>(null);
 
-  const handleMapLoad = (map: any, maps: any) => {
-    setMapRef(map);
+  const handleMapLoad = (maps: any) => {
     setMaps(maps);
   };
 
-  React.useEffect(() => {
-    if (mapRef && maps && breweries.length && width && height) {
+  useEffect(() => {
+    if (mapRef !== null) {
+      setMapWidth(mapRef.current.clientWidth);
+      setMapHeight(mapRef.current.clientHeight);
+    }
+    if (maps && mapWidth && mapHeight && breweries.length) {
       const bounds = new maps.LatLngBounds();
 
-      breweries.forEach((brewery) => {
-        if (brewery.latitude && brewery.longitude) {
-          const newPoint = new maps.LatLng(brewery.latitude, brewery.longitude);
-          bounds.extend(newPoint);
-        }
-      });
+      if (breweries.length === 1) {
+        const newPoint = new maps.LatLng(
+          breweries[0].latitude || 35,
+          (breweries[0].longitude || -100) - 1
+        );
+        bounds.extend(newPoint);
+        const newPoint1 = new maps.LatLng(
+         (breweries[0].latitude || 35) - 1,
+          breweries[0].longitude || -100
+        );
+        bounds.extend(newPoint1);
+      } else if (breweries.length > 1) {
+        breweries.forEach((brewery) => {
+          if (brewery.latitude && brewery.longitude) {
+            const newPoint = new maps.LatLng(
+              brewery.latitude,
+              brewery.longitude
+            );
+            bounds.extend(newPoint);
+          }
+        });
+      }
 
       const newBounds = {
         ne: {
@@ -43,21 +62,21 @@ const Map = ({ breweries }: MapProps) => {
       };
 
       const size = {
-        width: width / 2,
-        height: height - convertRemToPixels(5), // Map height in pixels
+        width: mapWidth,
+        height: mapHeight,
       };
 
       const { center, zoom } = fitBounds(newBounds, size);
-      setCenter(center);
       setZoom(zoom);
+      setCenter(center);
     }
-  }, [mapRef, maps, breweries, height, width]);
+  }, [maps, breweries, mapWidth, mapHeight]);
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: "100%", width: "100%" }} ref={mapRef}>
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({ map, maps }) => handleMapLoad(map, maps)}
+        onGoogleApiLoaded={({ maps }) => handleMapLoad(maps)}
         bootstrapURLKeys={{ key: "API_KEY" }}
         defaultCenter={{ lat: 35, lng: -100 }}
         defaultZoom={1}
@@ -68,10 +87,10 @@ const Map = ({ breweries }: MapProps) => {
           if (brewery.latitude && brewery.longitude) {
             return (
               <Marker
-                key={`${brewery.name}${index}`}
+                key={brewery.obdb_id}
                 lat={brewery.latitude}
                 lng={brewery.longitude}
-                text={"test"}
+                {...brewery}
               />
             );
           } else return null;

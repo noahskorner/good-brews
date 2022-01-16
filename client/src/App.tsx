@@ -18,7 +18,7 @@ const App = (props: AppProps) => {
       style={appStyle}
     >
       <Header displaySidebar={displaySidebar} />
-      {showSidebar && width && width < 640 && (
+      {showSidebar && width && width < 768 && (
         <Sidebar hideSidebar={hideSidebar} />
       )}
       {props.children}

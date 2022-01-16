@@ -72,12 +72,12 @@ const Header = (props: HeaderProps) => {
           >
             Sign Up
           </Link>
-          <button
+          <Link
+            to="/login"
             className="w-8 h-8 hover:bg-gray-100 rounded flex justify-center items-center md:hidden"
-            onClick={() => props.displaySidebar()}
           >
             <Person strokeWidth={1.5} size={24} />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

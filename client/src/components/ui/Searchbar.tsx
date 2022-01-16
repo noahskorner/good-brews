@@ -1,5 +1,5 @@
 import { Search, Location } from "akar-icons";
-import React from "react";
+import { KeyboardEvent, useEffect } from "react";
 
 interface SearchbarProps {
   search: Function;
@@ -14,15 +14,16 @@ const Searchbar = ({
   setZip,
   setCurrentLocation,
 }: SearchbarProps) => {
-  const handleEnterKeypress = (event: React.KeyboardEvent) => {
+  const handleEnterKeypress = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       search();
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     search();
-  });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="w-full max-w-3xl space-y-2">

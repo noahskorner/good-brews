@@ -2,15 +2,18 @@ import useWindowSize from "../hooks/useWindowSize";
 import Map from "../components/ui/Map";
 import Searchbar from "../components/ui/Searchbar";
 import { useState } from "react";
-import api from "../services/api";
+import { getBreweries } from "../services/api";
 import BreweryCard from "../components/ui/BreweryCard";
-import { Brewery } from "../interfaces/global";
+import { BreweryType } from "../interfaces/global";
+import Brewery from "../components/ui/Brewery";
 
 const Breweries = () => {
   const { height } = useWindowSize();
   const [name, setName] = useState("");
   const [zip, setZip] = useState("");
-  const [breweries, setBreweries] = useState<Brewery[]>([]);
+  const [breweries, setBreweries] = useState<BreweryType[]>([]);
+  const [currentBrewery, setCurrentBrewery] = useState<string | null>(null);
+
   const setCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
@@ -20,7 +23,7 @@ const Breweries = () => {
 
   const search = async () => {
     try {
-      const response = await api.getBreweries({ name, zip });
+      const response = await getBreweries({ name, zip });
       setBreweries(response.data);
     } catch (error) {
       console.log(error);
@@ -40,14 +43,23 @@ const Breweries = () => {
           setCurrentLocation={setCurrentLocation}
         />
         <div className="w-full max-w-3xl space-y-4">
-          {breweries.map((brewery) => {
-            return <BreweryCard {...brewery} />;
+          {breweries.map((brewery, index) => {
+            return (
+              <BreweryCard
+                key={brewery.obdb_id}
+                {...brewery}
+                setCurrentBrewery={setCurrentBrewery}
+              />
+            );
           })}
         </div>
       </div>
       <div className="hidden md:block w-5/12 h-full">
         <Map breweries={breweries} />
       </div>
+      {currentBrewery && (
+        <Brewery id={currentBrewery} setCurrentBrewery={setCurrentBrewery} />
+      )}
     </div>
   );
 };

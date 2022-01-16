@@ -1,6 +1,11 @@
-import { Brewery } from "../../interfaces/global";
+import { BreweryType } from "../../interfaces/global";
+
+interface BreweryCardProps extends BreweryType {
+  setCurrentBrewery: Function;
+}
 
 const BreweryCard = ({
+  obdb_id,
   name,
   street,
   address_2,
@@ -11,9 +16,13 @@ const BreweryCard = ({
   country,
   brewery_type,
   website_url,
-}: Brewery) => {
+  setCurrentBrewery,
+}: BreweryCardProps) => {
   return (
-    <div className="w-full border rounded p-4 flex hover:shadow">
+    <button
+      className="w-full border rounded p-4 flex hover:shadow text-left"
+      onClick={() => setCurrentBrewery(obdb_id)}
+    >
       <div className="h-20 w-20 md:h-32 md:w-32 lg:h-64 lg:w-64 bg-black rounded hidden"></div>
       <div className="p-2 space-y-2 flex-grow">
         <h6 className="text-md lg:text-xl font-semibold hover:underline">
@@ -44,7 +53,7 @@ const BreweryCard = ({
           </div>
         )}
       </div>
-    </div>
+    </button>
   );
 };
 

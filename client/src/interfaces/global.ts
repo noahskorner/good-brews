@@ -1,5 +1,5 @@
-export interface Brewery {
-  obdb_id?: string;
+export interface BreweryType {
+  obdb_id: string;
   name: string;
   brewery_type?: string;
   street?: string;
