@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BreweryType } from "../../interfaces/global";
+import { BreweryInterface } from "../../interfaces/global";
 import { getBrewery } from "../../services/api";
 import Map from "./Map";
 
@@ -9,7 +9,7 @@ interface BreweryProps {
 }
 
 const Brewery = ({ id, setCurrentBrewery }: BreweryProps) => {
-  const [brewery, setBrewery] = useState<BreweryType | null>(null);
+  const [brewery, setBrewery] = useState<BreweryInterface | null>(null);
 
   const loadBrewery = async (id: string) => {
     try {
@@ -31,7 +31,10 @@ const Brewery = ({ id, setCurrentBrewery }: BreweryProps) => {
         <div className="w-full max-w-5xl rounded relative z-10 bg-white flex flex-col md:flex-row-reverse justify-between">
           {/* Map */}
           <div className="w-full md:w-1/2 rounded-r h-64 md:h-auto">
-            <Map setCurrentBrewery={setCurrentBrewery} breweries={[brewery]}></Map>
+            <Map
+              breweries={[brewery]}
+              setCurrentBrewery={setCurrentBrewery}
+            ></Map>
           </div>
           {/* Brewery */}
           <div className="w-full md:w-1/2 space-y-2 bg-white flex justify-center items-start flex-col py-8 md:py-32 px-6 rounded-l">

@@ -1,6 +1,6 @@
-import { BreweryType } from "../../interfaces/global";
+import { BreweryInterface } from "../../interfaces/global";
 
-interface BreweryCardProps extends BreweryType {
+interface BreweryCardProps extends BreweryInterface {
   setCurrentBrewery: Function;
 }
 

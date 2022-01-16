@@ -1,29 +1,19 @@
-import { Search, Location } from "akar-icons";
-import { KeyboardEvent, useEffect } from "react";
+import { Search } from "akar-icons";
+import { KeyboardEvent } from "react";
+import ZipInput from "./ZipInput";
 
 interface SearchbarProps {
   search: Function;
   setName: Function;
   setZip: Function;
-  setCurrentLocation: Function;
 }
 
-const Searchbar = ({
-  search,
-  setName,
-  setZip,
-  setCurrentLocation,
-}: SearchbarProps) => {
+const Searchbar = ({ search, setName, setZip }: SearchbarProps) => {
   const handleEnterKeypress = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       search();
     }
   };
-
-  useEffect(() => {
-    search();
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <div className="w-full max-w-3xl space-y-2">
@@ -44,23 +34,7 @@ const Searchbar = ({
             />
           </div>
           <div className="h-7 bg-gray-300" style={{ width: "3px" }}></div>
-          {/* Zipcode */}
-          <div className="w-full px-2 flex">
-            <input
-              onChange={(event) => setZip(event.target.value)}
-              placeholder="Zipcode"
-              type="text"
-              name="zipCode"
-              className="w-full h-8 px-2 rounded"
-            />
-            {/* Current Location Button */}
-            <button
-              onClick={() => setCurrentLocation()}
-              className="w-8 h-8 hover:bg-gray-100 rounded flex justify-center items-center ml-2 flex-shrink-0"
-            >
-              <Location strokeWidth={2} size={20} />
-            </button>
-          </div>
+          <ZipInput search={search} setZip={setZip} />
         </div>
         {/* Search Button */}
         <button

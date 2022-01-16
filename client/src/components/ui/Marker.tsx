@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { BreweryType } from "../../interfaces/global";
+import { BreweryInterface } from "../../interfaces/global";
 
-interface MarkerProps extends BreweryType {
+interface MarkerProps extends BreweryInterface {
   lat: number;
   lng: number;
   setCurrentBrewery: Function;

@@ -22,6 +22,20 @@ input {
   outline: none;
 }
 
+/* Animations */
+.spin {
+  animation: spin 1000ms linear infinite;
+}
+@-moz-keyframes spin {
+  to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  to {transform:rotate(360deg);}
+}
+
 /* Utils */
 .gmnoprint[role="menubar"] {
   display: none;
@@ -31,18 +45,18 @@ input {
 @layer components {
   /* Buttons */
   .nav-btn {
-    @apply hover:bg-gray-100 px-3 py-2 rounded h-full font-medium
+    @apply hover:bg-gray-100 px-3 py-2 rounded h-full font-medium;
   }
   .sidebar-btn {
-    @apply hover:text-blue-600 text-lg font-medium
+    @apply hover:text-blue-600 text-lg font-medium;
   }
   .icon-btn {
-    @apply w-8 h-8 hover:bg-gray-100 rounded flex justify-center items-center
+    @apply w-8 h-8 hover:bg-gray-100 rounded flex justify-center items-center;
   }
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 rounded border border-blue-600 hover:border-blue-700 text-white whitespace-nowrap
+    @apply bg-blue-600 hover:bg-blue-700 rounded border border-blue-600 hover:border-blue-700 text-white whitespace-nowrap;
   }
   .btn-secondary {
-    @apply hover:bg-gray-100 border rounded whitespace-nowrap
+    @apply hover:bg-gray-100 border rounded whitespace-nowrap;
   }
 }

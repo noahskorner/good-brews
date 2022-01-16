@@ -1,4 +1,4 @@
-export interface BreweryType {
+export interface BreweryInterface {
   obdb_id: string;
   name: string;
   brewery_type?: string;
@@ -15,4 +15,9 @@ export interface BreweryType {
   longitude?: number;
   latitude?: number;
   tags?: string;
+}
+
+export interface CurrentLocationInterface {
+  latitude: number;
+  longitude: number;
 }

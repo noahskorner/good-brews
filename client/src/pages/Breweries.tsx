@@ -1,25 +1,19 @@
 import useWindowSize from "../hooks/useWindowSize";
 import Map from "../components/ui/Map";
 import Searchbar from "../components/ui/Searchbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getBreweries } from "../services/api";
 import BreweryCard from "../components/ui/BreweryCard";
-import { BreweryType } from "../interfaces/global";
+import { BreweryInterface } from "../interfaces/global";
 import Brewery from "../components/ui/Brewery";
+import { MapsProvider } from "../contexts";
 
 const Breweries = () => {
   const { height } = useWindowSize();
   const [name, setName] = useState("");
   const [zip, setZip] = useState("");
-  const [breweries, setBreweries] = useState<BreweryType[]>([]);
+  const [breweries, setBreweries] = useState<BreweryInterface[]>([]);
   const [currentBrewery, setCurrentBrewery] = useState<string | null>(null);
-
-  const setCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-      console.log(latitude, longitude);
-    });
-  };
 
   const search = async () => {
     try {
@@ -30,38 +24,40 @@ const Breweries = () => {
     }
   };
 
+  useEffect(() => {
+    search();
+    // eslint-disable-next-line
+  }, [zip, name]);
+
   return (
-    <div
-      className="w-full h-full flex"
-      style={{ height: `calc(${height}px - 5rem` }}
-    >
-      <div className="w-full md:w-7/12 h-full overflow-y-auto overflow-x-hidden flex flex-col items-center p-4 border-r relative z-10 space-y-4">
-        <Searchbar
-          search={search}
-          setName={setName}
-          setZip={setZip}
-          setCurrentLocation={setCurrentLocation}
-        />
-        {/* Breweries List */}
-        <div className="w-full max-w-3xl space-y-4">
-          {breweries.map((brewery, index) => {
-            return (
-              <BreweryCard
-                key={brewery.obdb_id}
-                {...brewery}
-                setCurrentBrewery={setCurrentBrewery}
-              />
-            );
-          })}
+    <MapsProvider>
+      <div
+        className="w-full h-full flex"
+        style={{ height: `calc(${height}px - 5rem` }}
+      >
+        <div className="w-full md:w-7/12 h-full overflow-y-auto overflow-x-hidden flex flex-col items-center p-4 border-r relative z-10 space-y-4">
+          <Searchbar search={search} setName={setName} setZip={setZip} />
+          {/* Breweries List */}
+          <div className="w-full max-w-3xl space-y-4">
+            {breweries.map((brewery, index) => {
+              return (
+                <BreweryCard
+                  key={brewery.obdb_id}
+                  {...brewery}
+                  setCurrentBrewery={setCurrentBrewery}
+                />
+              );
+            })}
+          </div>
         </div>
+        <div className="hidden md:block w-5/12 h-full">
+          <Map breweries={breweries} setCurrentBrewery={setCurrentBrewery} />
+        </div>
+        {currentBrewery && (
+          <Brewery id={currentBrewery} setCurrentBrewery={setCurrentBrewery} />
+        )}
       </div>
-      <div className="hidden md:block w-5/12 h-full">
-        <Map breweries={breweries} setCurrentBrewery={setCurrentBrewery} />
-      </div>
-      {currentBrewery && (
-        <Brewery id={currentBrewery} setCurrentBrewery={setCurrentBrewery} />
-      )}
-    </div>
+    </MapsProvider>
   );
 };
 

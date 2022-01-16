@@ -1,23 +1,24 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import GoogleMapReact, { fitBounds } from "google-map-react";
-import { BreweryType } from "../../interfaces/global";
+import { BreweryInterface } from "../../interfaces/global";
 import Marker from "./Marker";
+import { MapsContext } from "../../contexts";
 
 interface MapProps {
-  breweries: BreweryType[];
+  breweries: BreweryInterface[];
   setCurrentBrewery: Function;
 }
 const Map = ({ breweries, setCurrentBrewery }: MapProps) => {
   const defaultCenter = { lat: 35, lng: -100 };
-  const [maps, setMaps] = useState<any>(null);
   const [center, setCenter] = useState(defaultCenter);
   const [zoom, setZoom] = useState(1);
   const [mapHeight, setMapHeight] = useState();
   const [mapWidth, setMapWidth] = useState();
+  const mapsContext = useContext(MapsContext);
   const mapRef = useRef<any>(null);
 
   const handleMapLoad = (maps: any) => {
-    setMaps(maps);
+    mapsContext?.setMaps(maps);
   };
 
   useEffect(() => {
@@ -25,16 +26,16 @@ const Map = ({ breweries, setCurrentBrewery }: MapProps) => {
       setMapWidth(mapRef.current.clientWidth);
       setMapHeight(mapRef.current.clientHeight);
     }
-    if (maps && mapWidth && mapHeight && breweries.length) {
-      const bounds = new maps.LatLngBounds();
+    if (mapsContext?.maps && mapWidth && mapHeight && breweries.length) {
+      const bounds = new mapsContext.maps.LatLngBounds();
 
       if (breweries.length === 1) {
-        const newPoint = new maps.LatLng(
+        const newPoint = new mapsContext.maps.LatLng(
           breweries[0].latitude || 35,
           (breweries[0].longitude || -100) - 1
         );
         bounds.extend(newPoint);
-        const newPoint1 = new maps.LatLng(
+        const newPoint1 = new mapsContext.maps.LatLng(
           (breweries[0].latitude || 35) - 1,
           breweries[0].longitude || -100
         );
@@ -42,7 +43,7 @@ const Map = ({ breweries, setCurrentBrewery }: MapProps) => {
       } else if (breweries.length > 1) {
         breweries.forEach((brewery) => {
           if (brewery.latitude && brewery.longitude) {
-            const newPoint = new maps.LatLng(
+            const newPoint = new mapsContext.maps.LatLng(
               brewery.latitude,
               brewery.longitude
             );
@@ -71,7 +72,7 @@ const Map = ({ breweries, setCurrentBrewery }: MapProps) => {
       setZoom(zoom);
       setCenter(center);
     }
-  }, [maps, breweries, mapWidth, mapHeight]);
+  }, [mapsContext?.maps, breweries, mapWidth, mapHeight]);
 
   return (
     <div style={{ height: "100%", width: "100%" }} ref={mapRef}>
