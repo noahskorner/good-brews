@@ -42,6 +42,7 @@ const Breweries = () => {
           setZip={setZip}
           setCurrentLocation={setCurrentLocation}
         />
+        {/* Breweries List */}
         <div className="w-full max-w-3xl space-y-4">
           {breweries.map((brewery, index) => {
             return (
@@ -55,7 +56,7 @@ const Breweries = () => {
         </div>
       </div>
       <div className="hidden md:block w-5/12 h-full">
-        <Map breweries={breweries} />
+        <Map breweries={breweries} setCurrentBrewery={setCurrentBrewery} />
       </div>
       {currentBrewery && (
         <Brewery id={currentBrewery} setCurrentBrewery={setCurrentBrewery} />

@@ -23,11 +23,12 @@ const BreweryCard = ({
       className="w-full border rounded p-4 flex hover:shadow text-left"
       onClick={() => setCurrentBrewery(obdb_id)}
     >
-      <div className="h-20 w-20 md:h-32 md:w-32 lg:h-64 lg:w-64 bg-black rounded hidden"></div>
       <div className="p-2 space-y-2 flex-grow">
+        {/* Name */}
         <h6 className="text-md lg:text-xl font-semibold hover:underline">
           {name}
         </h6>
+        {/* Address */}
         <p className="text-sm text-gray-500">
           {street}&nbsp;
           {address_2 && `${address_2} `}
@@ -37,16 +38,18 @@ const BreweryCard = ({
           {postal_code}&nbsp;
           {country} &nbsp;
         </p>
+        {/* Type */}
         <div className="text-xs bg-gray-100 px-3 py-1 inline-block rounded capitalize">
           {brewery_type && brewery_type}
         </div>
+        {/* Webiste */}
         {website_url && (
           <div className="w-full flex justify-end">
             <a
               href={website_url}
               target="_blank"
               rel="noreferrer"
-              className="text-sm text-white bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded"
+              className="btn-primary text-sm px-5 py-2"
             >
               Visit Website
             </a>

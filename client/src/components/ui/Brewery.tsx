@@ -26,11 +26,14 @@ const Brewery = ({ id, setCurrentBrewery }: BreweryProps) => {
 
   return (
     <div className="flex justify-center items-start fixed top-0 left-0 right-0 bottom-0 z-10 p-4">
+      {/* Modal */}
       {brewery && (
         <div className="w-full max-w-5xl rounded relative z-10 bg-white flex flex-col md:flex-row-reverse justify-between">
+          {/* Map */}
           <div className="w-full md:w-1/2 rounded-r h-64 md:h-auto">
-            <Map breweries={[brewery]}></Map>
+            <Map setCurrentBrewery={setCurrentBrewery} breweries={[brewery]}></Map>
           </div>
+          {/* Brewery */}
           <div className="w-full md:w-1/2 space-y-2 bg-white flex justify-center items-start flex-col py-8 md:py-32 px-6 rounded-l">
             <h1 className="text-2xl md:text-4xl font-semibold">
               {brewery.name}
@@ -51,7 +54,7 @@ const Brewery = ({ id, setCurrentBrewery }: BreweryProps) => {
                 href={brewery.website_url}
                 target="_blank"
                 rel="noreferrer"
-                className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white"
+                className="btn-primary px-4 py-2"
               >
                 Visit Website
               </a>
@@ -59,6 +62,7 @@ const Brewery = ({ id, setCurrentBrewery }: BreweryProps) => {
           </div>
         </div>
       )}
+      {/* Modal Background */}
       <div
         onClick={() => setCurrentBrewery(null)}
         className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-10"

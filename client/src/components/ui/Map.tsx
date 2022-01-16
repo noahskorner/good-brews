@@ -5,8 +5,9 @@ import Marker from "./Marker";
 
 interface MapProps {
   breweries: BreweryType[];
+  setCurrentBrewery: Function;
 }
-const Map = ({ breweries }: MapProps) => {
+const Map = ({ breweries, setCurrentBrewery }: MapProps) => {
   const defaultCenter = { lat: 35, lng: -100 };
   const [maps, setMaps] = useState<any>(null);
   const [center, setCenter] = useState(defaultCenter);
@@ -34,7 +35,7 @@ const Map = ({ breweries }: MapProps) => {
         );
         bounds.extend(newPoint);
         const newPoint1 = new maps.LatLng(
-         (breweries[0].latitude || 35) - 1,
+          (breweries[0].latitude || 35) - 1,
           breweries[0].longitude || -100
         );
         bounds.extend(newPoint1);
@@ -87,6 +88,7 @@ const Map = ({ breweries }: MapProps) => {
           if (brewery.latitude && brewery.longitude) {
             return (
               <Marker
+                setCurrentBrewery={setCurrentBrewery}
                 key={brewery.obdb_id}
                 lat={brewery.latitude}
                 lng={brewery.longitude}

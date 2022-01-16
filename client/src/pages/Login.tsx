@@ -24,7 +24,7 @@ const Login = () => {
               className="w-full rounded p-2 border bg-gray-50"
             />
           </div>
-          <button className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded shadow text-white border border-blue-600 hover:border-blue-700">
+          <button className="w-full btn-primary py-2 shadow ">
             Login
           </button>
           <Link to="/register" className="text-sm hover:underline block">Need an account?</Link>
