@@ -7,7 +7,7 @@ const app = express();
 // APP SETTINGS
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://good-brews-server.herokuapp.com"],
   })
 );
 app.use(express.json());
