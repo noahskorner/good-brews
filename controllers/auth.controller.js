@@ -149,7 +149,7 @@ const registerUser = async (req, res) => {
         password: hashedPassword,
       });
 
-      return res.status(201).json(response);
+      return res.sendStatus(201);
     }
   } catch (error) {
     console.log(error.message);
