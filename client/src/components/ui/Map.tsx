@@ -79,7 +79,7 @@ const Map = ({ breweries, setCurrentBrewery }: MapProps) => {
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ maps }) => handleMapLoad(maps)}
-        bootstrapURLKeys={{ key: "API_KEY" }}
+        bootstrapURLKeys={{ key: "AIzaSyC3jD5bIdBBwHm3e_VPJkm20WLyGFhaj3Q" }}
         defaultCenter={{ lat: 35, lng: -100 }}
         defaultZoom={1}
         center={center}

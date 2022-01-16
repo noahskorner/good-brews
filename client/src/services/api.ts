@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:3001/api/";
+const baseURL = "https://good-brews-server.herokuapp.com/api/";
 
 const apiClient = axios.create({
   baseURL: baseURL,
