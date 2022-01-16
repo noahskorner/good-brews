@@ -8,13 +8,13 @@ const getBreweries = async (req, res) => {
   const breweries = await Breweries.findAll({
     where: {
       name: {
-        [Op.like]: `%${name}%`,
+        [Op.iLike]: `%${name}%`,
       },
       postal_code: {
-        [Op.like]: `%${zip}%`,
+        [Op.iLike]: `%${zip}%`,
       },
     },
-    limit: 25,
+    limit: 50,
   })
     .then((data) => data)
     .catch((error) => {
