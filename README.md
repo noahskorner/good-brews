@@ -4,6 +4,9 @@ An application used to find breweries near you. Built using React, Typescript, T
 ## Project Status
 In Progress. Users can search for breweries by name, zipcode, or their current location. Register, login, save breweries, etc. API's are complete, UI/UX still needs to be completed.
 
+## API Documentation
+https://documenter.getpostman.com/view/12120504/UVXkoao8
+
 ## Project Screen Shot(s)
 
 #### Example:   
